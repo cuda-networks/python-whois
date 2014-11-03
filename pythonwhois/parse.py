@@ -101,6 +101,7 @@ grammar = {
 					 'Domain Name Commencement Date: (?P<val>.+)',
 					 'registered:\s*(?P<val>.+)',
 					 'domain_dateregistered:\s*(?P<val>.+)',
+					 'registered date\s*:\s*(?P<val>.+)',
 					 'registration:\s*(?P<val>.+)'],
 		'expiration_date':	['\[Expires on\]\s*(?P<val>.+)',
 					 'Registrar Registration Expiration Date:[ ]*(?P<val>.+)-[0-9]{4}',
@@ -151,6 +152,7 @@ grammar = {
 					 '\[Last Update\]\s*(?P<val>.+) \([A-Z]+\)'],
 		'registrar':		['registrar:\s*(?P<val>.+)',
 					 'Registrar:\s*(?P<val>.+)',
+					 'Registrant\s+:\s+(?P<val>.+)',
 					 'Sponsoring Registrar Organization:\s*(?P<val>.+)',
 					 'Registered through:\s?(?P<val>.+)',
 					 'Registrar Name[.]*:\s?(?P<val>.+)',
@@ -170,6 +172,7 @@ grammar = {
 					 'nserver:\s*(?P<val>[^[\s]+)',
 					 'Name Server[.]+ (?P<val>[^[\s]+)',
 					 'Hostname:\s*(?P<val>[^\s]+)',
+					 '\s+Host Name\s+:\s*(?P<val>[^\s]+)',
 					 'DNS[0-9]+:\s*(?P<val>.+)',
 					 '   DNS:\s*(?P<val>.+)',
 					 'ns[0-9]+:\s*(?P<val>.+)',
@@ -190,7 +193,7 @@ grammar = {
 		'[a-z]{3}\s(?P<month>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[./ -](?P<day>[0-9]{1,2})(\s+(?P<hour>[0-9]{1,2})[:.](?P<minute>[0-9]{1,2})[:.](?P<second>[0-9]{1,2}))?\s[a-z]{3}\s(?P<year>[0-9]{4}|[0-9]{2})',
 		'[a-zA-Z]+\s(?P<day>[0-9]{1,2})(?:st|nd|rd|th)\s(?P<month>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|January|February|March|April|May|June|July|August|September|October|November|December)\s(?P<year>[0-9]{4})',
 		'(?P<year>[0-9]{4})[./-]?(?P<month>[0-9]{2})[./-]?(?P<day>[0-9]{2})(\s|T|/)((?P<hour>[0-9]{1,2})[:.-](?P<minute>[0-9]{1,2})[:.-](?P<second>[0-9]{1,2}))',
-		'(?P<year>[0-9]{4})[./-](?P<month>[0-9]{1,2})[./-](?P<day>[0-9]{1,2})',
+		'(?P<year>[0-9]{4})[./-]\s*(?P<month>[0-9]{1,2})[./-]\s*(?P<day>[0-9]{1,2})',
 		'(?P<day>[0-9]{1,2})[./ -](?P<month>[0-9]{1,2})[./ -](?P<year>[0-9]{4}|[0-9]{2})',
 		'(?P<month>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?P<day>[0-9]{1,2}),? (?P<year>[0-9]{4})',
 		'(?P<day>[0-9]{1,2})-(?P<month>January|February|March|April|May|June|July|August|September|October|November|December)-(?P<year>[0-9]{4})',
@@ -354,6 +357,7 @@ admin_contact_regexes = [
 	"ADMIN ID:(?P<handle>.+)\nADMIN Name:(?P<name>.*)\n(?:ADMIN Organization:(?P<organization>.*)\n)?ADMIN Street1:(?P<street1>.+?)\n(?:ADMIN Street2:(?P<street2>.+?)\n(?:ADMIN Street3:(?P<street3>.+?)\n)?)?ADMIN City:(?P<city>.+)\nADMIN State:(?P<state>.*)\nADMIN Postal Code:(?P<postalcode>.+)\nADMIN Country:(?P<country>[A-Z]+)\nADMIN Phone:(?P<phone>.*?)\nADMIN Fax:(?P<fax>.*)\nADMIN Email:(?P<email>.+)\n", # Realtime Register
 	"Administrative Contact\n NIC Handle \(if known\)\.+:(?P<handle>.*)\n \(I\)ndividual \(R\)ole\.+:(?P<role>.*)\n Name \(Last, First\)\.+:(?P<name>.*)\n Organization Name\.+:(?P<organization>.*)\n Street Address\.+:(?P<street1>.*)\n City\.+: (?P<city>.*)\n State\.+: (?P<state>.*)\n Postal Code\.+:(?P<postalcode>.*)\n Country\.+:(?P<country>.*)\n Phone Number\.+:(?P<phone>.*)\n Fax Number\.+:(?P<fax>.*)\n E-Mailbox\.+:(?P<email>.*)", # .ai
 	"admin_contact_name: (?P<name>.*)\n(?:admin_contact_address1: (?P<street1>.*)\n)?(?:admin_contact_address2: (?P<street2>.*)\n)?(?:admin_contact_address3: (?P<street3>.*)\n)?(?:admin_contact_city: (?P<city>.*)\n)?(?:admin_contact_postalcode: (?P<postalcode>.*)\n)?(?:admin_contact_country: (?P<country>.*)\n)?(?:admin_contact_phone: (?P<phone>.*)\n)?(?:admin_contact_fax: (?P<fax>.*)\n)?(?:admin_contact_email: (?P<email>.*)\n)?", # .nz
+	"Administrative Contact\(AC\)\s+: (?P<organization>.+)\nAC E-Mail\s+: (?P<email>.*)\nAC Phone Number\s+: (?P<phone>.*)\n"# .kr
 ]
 
 billing_contact_regexes = [
