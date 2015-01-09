@@ -125,6 +125,7 @@ grammar = {
 					 'expiration_date:\s*(?P<val>.+)',
 					 'expire-date:\s*(?P<val>.+)',
 					 'renewal:\s*(?P<val>.+)',
+					 'renewal date:\s*(?P<val>.+)',
 					 'domain_datebilleduntil:\s*(?P<val>.+)',
 					 'expire:\s*(?P<val>.+)'],
 		'updated_date':		['\[Last Updated\]\s*(?P<val>.+)',
