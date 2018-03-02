@@ -9,27 +9,29 @@ def get_whois_raw(domain, server="", previous=None, rfc3490=True, never_cut=Fals
 	server_list = server_list or []
 	# Sometimes IANA simply won't give us the right root WHOIS server
 	exceptions = {
-		".ac.uk": "whois.ja.net",
-		".ps": "whois.pnina.ps",
-		".buzz": "whois.nic.buzz",
-		".moe": "whois.nic.moe",
 		".arpa": "whois.iana.org",
-		".bid": "whois.nic.bid",
+		".bm": "whois.asaplatform.info",
+		".buzz": "whois.nic.buzz",
+		".doosan": "whois.nic.doosan",
+		".flsmidth": "whois.ksregistry.net",
+		".iinet": "whois.aridnrs.net.au",
 		".int": "whois.iana.org",
 		".kred": "whois.nic.kred",
+		".mtpc": "whois.nic.gmo",
+		".mutuelle": "whois-mutuelle.nic.fr",
 		".nagoya": "whois.gmoregistry.net",
 		".nyc": "whois.nic.nyc",
-		".okinawa": "whois.gmoregistry.net",
+		".okinawa": "whois.gmoregistry.ne",
+		".orientexpress": "whois.afilias-srs.net",
+		".ps": "whois.pnina.ps",
 		".qpon": "whois.nic.qpon",
 		".sohu": "whois.gtld.knet.cn",
+		".stream": "whois.nic.stream",
 		".tokyo": "whois.nic.tokyo",
-		".trade": "whois.nic.trade",
-		".webcam": "whois.nic.webcam",
 		".xn--rhqv96g": "whois.nic.xn--rhqv96g",
-		".bm": "whois.asaplatform.info",
 		# The following is a bit hacky, but IANA won't return the right answer for example.com because it's a direct registration.
 		"example.com": "whois.verisign-grs.com",
-		"example.net": "whois.verisign-grs.com"
+		"example.net": "whois.verisign-grs.com",
 	}
 
 	if rfc3490:
