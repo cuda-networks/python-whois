@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+from __future__ import absolute_import, unicode_literals, print_function
 
 import sys, argparse, os, pythonwhois, json, datetime, codecs, time
 import pkgutil
@@ -118,7 +119,7 @@ if args.mode[0] == "run":
 	suites = []
 	for target in targets:
 		try:
-			with codecs.open(os.path.join("test/data", target), "r") as f:
+			with codecs.open(os.path.join("test/data", target), "r", "utf-8") as f:
 				data = f.read().split("\n--\n")
 		except IOError as e:
 			sys.stderr.write("Invalid domain %(domain)s specified. No test case or base data exists.\n" % {"domain": target})
@@ -133,9 +134,9 @@ if args.mode[0] == "run":
 				# Fall back to trying all registered codecs
 				data = read_encoded_file(os.path.join("test/data", target)).split("\n--\n")
 		try:
-			with codecs.open(os.path.join("test/target_default", target), "r") as f:
+			with codecs.open(os.path.join("test/target_default", target), "r", "utf-8") as f:
 				default = f.read()
-			with codecs.open(os.path.join("test/target_normalized", target), "r") as f:
+			with codecs.open(os.path.join("test/target_normalized", target), "r", "utf-8") as f:
 				normalized = f.read()
 		except IOError as e:
 			sys.stderr.write("Missing target data for domain %(domain)s. Run `./test.py update %(domain)s` to correct this, after verifying that pythonwhois can correctly parse this particular domain.\n" % {"domain": target})
@@ -223,7 +224,7 @@ elif args.mode[0] == "update":
 	updates = []
 	for target in targets:
 		try:
-			with codecs.open(os.path.join("test/data", target), "r") as f:
+			with codecs.open(os.path.join("test/data", target), "r", "utf-8") as f:
 				data = f.read().split("\n--\n")
 			updates.append((target, data))
 		except IOError as e:
@@ -237,8 +238,8 @@ elif args.mode[0] == "update":
 	for target, data in updates:
 		default = pythonwhois.parse.parse_raw_whois(data)
 		normalized = pythonwhois.parse.parse_raw_whois(data, normalized=True)
-		with codecs.open(os.path.join("test/target_default", target), "w") as f:
+		with codecs.open(os.path.join("test/target_default", target), "w", "utf-8") as f:
 			f.write(encoded_json_dumps(default))
-		with codecs.open(os.path.join("test/target_normalized", target), "w") as f:
+		with codecs.open(os.path.join("test/target_normalized", target), "w", "utf-8") as f:
 			f.write(encoded_json_dumps(normalized))
 		print("Generated target data for %s." % target)

@@ -4,6 +4,7 @@
 # response of IANA to the WHOIS server in the list. IANA does not appear to be
 # aware of all the new TLDs yet, so this is a quick way to check what TLDs need
 # an exception in the WHOIS lookup code.
+from __future__ import absolute_import, unicode_literals, print_function
 
 import pythonwhois
 
@@ -568,9 +569,8 @@ for item in tld_list.split("\n"):
 		root_server = pythonwhois.net.get_root_server(target_domain)
 
 		if root_server.strip() != server.strip():
-			print "[ERR] WHOIS server doesn't match for %s! List indicates %s, IANA said %s." % (tld, server, root_server)
+			print("[ERR] WHOIS server doesn't match for {}! List indicates %s, IANA said %s." % (tld, server, root_server))
 		else:
-			print "[OK ] IANA and list agree that the WHOIS server for %s is %s." % (tld, root_server)
+			print("[OK ] IANA and list agree that the WHOIS server for %s is %s." % (tld, root_server))
 	except Exception as e:
-		print "[ERR] Unknown WHOIS server for %s! List indicates %s." % (tld, server)
-
+		print("[ERR] Unknown WHOIS server for %s! List indicates %s." % (tld, server))

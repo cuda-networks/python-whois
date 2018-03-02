@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='pythonwhois-bn',
+setup(name='pythonwhois',
       version='2.5.0',
       description='Module for retrieving and parsing the WHOIS data for a domain. Supports most domains. No dependencies.',
       author='Barracuda Networks',

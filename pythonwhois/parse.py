@@ -1,4 +1,5 @@
-from __future__ import print_function
+from __future__ import absolute_import, unicode_literals, print_function
+
 import re, sys, datetime, csv, pkgutil
 from . import net, shared
 
@@ -14,6 +15,12 @@ def pkgdata(name):
 	else:
 		return data.decode("utf-8")
 
+def to_u(text):
+	if sys.version_info < (3, 0):
+		return text.decode("utf-8", "replace")
+	else:
+		return text
+
 def read_dataset(filename, destination, abbrev_key, name_key, is_dict=False):
 	try:
 		if is_dict:
@@ -22,7 +29,7 @@ def read_dataset(filename, destination, abbrev_key, name_key, is_dict=False):
 			reader = csv.reader(pkgdata(filename).splitlines())
 
 		for line in reader:
-			destination[line[abbrev_key]] = line[name_key]
+			destination[to_u(line[abbrev_key])] = to_u(line[name_key])
 	except IOError as e:
 		pass
 
@@ -37,7 +44,7 @@ try:
 	reader = csv.DictReader(pkgdata("common_first_names.dat").splitlines())
 
 	for line in reader:
-		common_first_names.add(line["name"].lower())
+		common_first_names.add(to_u(line["name"]).lower())
 except IOError as e:
 	pass
 
@@ -45,8 +52,8 @@ try:
 	reader = csv.reader(pkgdata("airports.dat").splitlines())
 
 	for line in reader:
-		airports[line[4]] = line[2]
-		airports[line[5]] = line[2]
+		airports[to_u(line[4])] = to_u(line[2])
+		airports[to_u(line[5])] = to_u(line[2])
 except IOError as e:
 	# The distributor likely removed airports.dat for licensing reasons. We'll just leave an empty dict.
 	pass
@@ -505,7 +512,7 @@ country_regexes = precompile_regexes(country_regexes)
 known_abbreviations = precompile_regexes_dict(known_abbreviations, re.IGNORECASE)
 
 duplicate_spaces = re.compile(" {2,}")
-non_name_characters = ''.join(char for char in map(chr, range(256)) if not char.isalpha())
+non_name_characters = [to_u(char) for char in map(chr, range(256)) if not char.isalpha()]
 name_separators = re.compile(r'[, ]+')
 comma_without_space = re.compile(r',([a-z])', re.IGNORECASE)
 

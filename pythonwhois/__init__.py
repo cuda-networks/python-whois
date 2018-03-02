@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals, print_function
+
 from . import net, parse
 
 def get_whois(domain, normalized=[], timeout=None):
