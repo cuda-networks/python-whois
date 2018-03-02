@@ -104,13 +104,16 @@ def get_root_server(domain, timeout=None):
 	
 def whois_request(domain, server, port=43, timeout=None):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sock.settimeout(timeout)
-	sock.connect((server, port))
-	sock.send(("%s\r\n" % domain).encode("utf-8"))
-	buff = b""
-	while True:
-		data = sock.recv(1024)
-		if len(data) == 0:
-			break
-		buff += data
-	return buff.decode("utf-8", "replace")
+	try:
+		sock.settimeout(timeout)
+		sock.connect((server, port))
+		sock.send(("%s\r\n" % domain).encode("utf-8"))
+		buff = b""
+		while True:
+			data = sock.recv(1024)
+			if len(data) == 0:
+				break
+			buff += data
+		return buff.decode("utf-8", "replace")
+	finally:
+		sock.close()
