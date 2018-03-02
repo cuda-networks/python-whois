@@ -4,7 +4,7 @@ import socket, re, sys
 from codecs import encode, decode
 from . import shared
 
-def get_whois_raw(domain, server="", previous=None, rfc3490=True, never_cut=False, with_server_list=False, server_list=None, timeout=None):
+def get_whois_raw(domain, server="", previous=None, rfc3490=True, never_cut=False, with_server_list=False, server_list=None, ignore_referral=False, timeout=None):
 	previous = previous or []
 	server_list = server_list or []
 	# Sometimes IANA simply won't give us the right root WHOIS server
@@ -79,7 +79,7 @@ def get_whois_raw(domain, server="", previous=None, rfc3490=True, never_cut=Fals
 	server_list.append(target_server)
 	
 	# Ignore redirects from registries who publish the registrar data themselves
-	if target_server not in ('whois.nic.xyz',):
+	if target_server not in ('whois.nic.xyz',) and not ignore_referral:
 		for line in [x.strip() for x in response.splitlines()]:
 			match = re.match("(refer|whois server|referral url|registrar whois(?: server)?):\s*([^\s]+\.[^\s]+)", line, re.IGNORECASE)
 			if match is not None:
